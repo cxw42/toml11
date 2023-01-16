@@ -171,3 +171,4 @@ template<typename T, typename V> struct is_exact_toml_type<T const volatile&, V>
 } // toml
 
 #endif// TOML11_TYPES_H
+/// @file toml/types.hpp

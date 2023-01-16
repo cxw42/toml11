@@ -414,3 +414,4 @@ struct region final : public region_base
 } // detail
 } // toml
 #endif// TOML11_REGION_H
+/// @file toml/region.hpp

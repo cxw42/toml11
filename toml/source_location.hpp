@@ -237,3 +237,4 @@ inline std::string format_underline(const std::string& message,
 } // detail
 } // toml
 #endif// TOML11_SOURCE_LOCATION_HPP
+/// @file toml/source_location.hpp

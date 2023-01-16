@@ -119,3 +119,4 @@
 #endif// TOML11_WITHOUT_DEFINE_NON_INTRUSIVE
 
 #endif// TOML11_MACROS_HPP
+/// @file toml/macros.hpp

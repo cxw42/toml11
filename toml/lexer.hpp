@@ -292,3 +292,4 @@ using lex_comment = sequence<lex_comment_start_symbol, repeat<either<
 } // detail
 } // toml
 #endif // TOML_LEXER_HPP
+/// @file toml/lexer.hpp

@@ -715,3 +715,4 @@ inline failure<none_t> none() noexcept {return failure<none_t>{none_t{}};}
 } // detail
 } // toml11
 #endif// TOML11_RESULT_H
+/// @file toml/result.hpp

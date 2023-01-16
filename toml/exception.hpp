@@ -77,3 +77,4 @@ struct internal_error : public toml::exception
 
 } // toml
 #endif // TOML_EXCEPTION
+/// @file toml/exception.hpp

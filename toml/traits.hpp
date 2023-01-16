@@ -326,3 +326,4 @@ using remove_cvref_t = typename remove_cvref<T>::type;
 }// detail
 }//toml
 #endif // TOML_TRAITS
+/// @file toml/traits.hpp

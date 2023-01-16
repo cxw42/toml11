@@ -482,3 +482,4 @@ operator<<(std::basic_ostream<charT, traits>& os, const discard_comments&)
 
 } // toml11
 #endif// TOML11_COMMENTS_HPP
+/// @file toml/comments.hpp

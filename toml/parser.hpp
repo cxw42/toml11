@@ -2539,3 +2539,4 @@ basic_value<Comment, Table, Array> parse(const std::filesystem::path& fpath)
 
 } // toml
 #endif// TOML11_PARSER_HPP
+/// @file toml/parser.hpp

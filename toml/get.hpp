@@ -1117,3 +1117,4 @@ expect(const basic_value<C, M, V>& v, const toml::key& k) noexcept
 
 } // toml
 #endif// TOML11_GET
+/// @file toml/get.hpp

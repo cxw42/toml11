@@ -111,3 +111,4 @@ operator"" _toml(const char8_t* str, std::size_t len)
 } // literals
 } // toml
 #endif//TOML11_LITERAL_HPP
+/// @file toml/literal.hpp

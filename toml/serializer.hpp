@@ -920,3 +920,4 @@ operator<<(std::basic_ostream<charT, traits>& os, const basic_value<C, M, V>& v)
 
 } // toml
 #endif// TOML11_SERIALIZER_HPP
+/// @file toml/serializer.hpp

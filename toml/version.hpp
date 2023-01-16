@@ -40,3 +40,4 @@
 #endif
 
 #endif// TOML11_VERSION_HPP
+/// @file toml/version.hpp

@@ -17,3 +17,4 @@ struct from;
 
 } // toml
 #endif // TOML11_FROM_HPP
+/// @file toml/from.hpp

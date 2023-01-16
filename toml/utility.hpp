@@ -148,3 +148,4 @@ last_one(T&& /*head*/, Ts&& ... tail)
 
 }// toml
 #endif // TOML11_UTILITY
+/// @file toml/utility.hpp

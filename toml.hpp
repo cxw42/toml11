@@ -51,3 +51,4 @@
 #include "toml/macros.hpp"
 
 #endif// TOML_FOR_MODERN_CPP
+/// @file toml.hpp

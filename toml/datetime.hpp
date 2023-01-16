@@ -629,3 +629,4 @@ operator<<(std::basic_ostream<charT, traits>& os, const offset_datetime& dt)
 
 }//toml
 #endif// TOML11_DATETIME
+/// @file toml/datetime.hpp

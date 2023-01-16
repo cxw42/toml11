@@ -304,3 +304,4 @@ struct repeat<T, unlimited>
 } // detail
 } // toml
 #endif// TOML11_COMBINATOR_HPP
+/// @file toml/combinator.hpp

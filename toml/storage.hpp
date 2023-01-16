@@ -41,3 +41,4 @@ struct storage
 } // detail
 } // toml
 #endif// TOML11_STORAGE_HPP
+/// @file toml/storage.hpp

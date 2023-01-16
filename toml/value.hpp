@@ -2035,3 +2035,4 @@ visit(Visitor&& visitor, toml::basic_value<C, T, A>&& v)
 
 }// toml
 #endif// TOML11_VALUE
+/// @file toml/value.hpp

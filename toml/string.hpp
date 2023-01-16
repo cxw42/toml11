@@ -226,3 +226,4 @@ operator<<(std::basic_ostream<charT, traits>& os, const string& s)
 
 } // toml
 #endif// TOML11_STRING_H
+/// @file toml/string.hpp

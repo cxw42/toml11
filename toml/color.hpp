@@ -107,3 +107,4 @@ namespace color = color_ansi;
 
 } // toml
 #endif// TOML11_COLOR_HPP
+/// @file toml/color.hpp
