@@ -6,8 +6,10 @@
 #include <fstream>
 #include <sstream>
 
+#ifdef TOML_FOR_MODERN_CPP_WITH_IMPLEMENTATION
 #include "combinator.hpp"
 #include "lexer.hpp"
+#endif // TOML_FOR_MODERN_CPP_WITH_IMPLEMENTATION
 #include "region.hpp"
 #include "result.hpp"
 #include "types.hpp"
@@ -27,7 +29,8 @@ namespace toml
 namespace detail
 {
 
-inline result<std::pair<boolean, region>, std::string>
+#ifdef TOML_FOR_MODERN_CPP_WITH_IMPLEMENTATION
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<boolean, region>, std::string>
 parse_boolean(location& loc)
 {
     const auto first = loc.iter();
@@ -49,7 +52,7 @@ parse_boolean(location& loc)
                {{source_location(loc), "the next token is not a boolean"}}));
 }
 
-inline result<std::pair<integer, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<integer, region>, std::string>
 parse_binary_integer(location& loc)
 {
     const auto first = loc.iter();
@@ -85,7 +88,7 @@ parse_binary_integer(location& loc)
                {{source_location(loc), "the next token is not an integer"}}));
 }
 
-inline result<std::pair<integer, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<integer, region>, std::string>
 parse_octal_integer(location& loc)
 {
     const auto first = loc.iter();
@@ -120,7 +123,7 @@ parse_octal_integer(location& loc)
                {{source_location(loc), "the next token is not an integer"}}));
 }
 
-inline result<std::pair<integer, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<integer, region>, std::string>
 parse_hexadecimal_integer(location& loc)
 {
     const auto first = loc.iter();
@@ -147,7 +150,7 @@ parse_hexadecimal_integer(location& loc)
                {{source_location(loc), "the next token is not an integer"}}));
 }
 
-inline result<std::pair<integer, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<integer, region>, std::string>
 parse_integer(location& loc)
 {
     const auto first = loc.iter();
@@ -200,7 +203,7 @@ parse_integer(location& loc)
                {{source_location(loc), "the next token is not an integer"}}));
 }
 
-inline result<std::pair<floating, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<floating, region>, std::string>
 parse_floating(location& loc)
 {
     const auto first = loc.iter();
@@ -295,7 +298,7 @@ parse_floating(location& loc)
                {{source_location(loc), "the next token is not a float"}}));
 }
 
-inline std::string read_utf8_codepoint(const region& reg, const location& loc)
+TOML_INLINE_IF_HEADER_ONLY std::string read_utf8_codepoint(const region& reg, const location& loc)
 {
     const auto str = reg.str().substr(1);
     std::uint_least32_t codepoint;
@@ -352,7 +355,7 @@ inline std::string read_utf8_codepoint(const region& reg, const location& loc)
     return character;
 }
 
-inline result<std::string, std::string> parse_escape_sequence(location& loc)
+TOML_INLINE_IF_HEADER_ONLY result<std::string, std::string> parse_escape_sequence(location& loc)
 {
     const auto first = loc.iter();
     if(first == loc.end() || *first != '\\')
@@ -410,7 +413,7 @@ inline result<std::string, std::string> parse_escape_sequence(location& loc)
     return err(msg);
 }
 
-inline std::ptrdiff_t check_utf8_validity(const std::string& reg)
+TOML_INLINE_IF_HEADER_ONLY std::ptrdiff_t check_utf8_validity(const std::string& reg)
 {
     location loc("tmp", reg);
     const auto u8 = repeat<lex_utf8_code, unlimited>::invoke(loc);
@@ -423,7 +426,7 @@ inline std::ptrdiff_t check_utf8_validity(const std::string& reg)
     return -1;
 }
 
-inline result<std::pair<toml::string, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<toml::string, region>, std::string>
 parse_ml_basic_string(location& loc)
 {
     const auto first = loc.iter();
@@ -516,7 +519,7 @@ parse_ml_basic_string(location& loc)
     }
 }
 
-inline result<std::pair<toml::string, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<toml::string, region>, std::string>
 parse_basic_string(location& loc)
 {
     const auto first = loc.iter();
@@ -582,7 +585,7 @@ parse_basic_string(location& loc)
     }
 }
 
-inline result<std::pair<toml::string, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<toml::string, region>, std::string>
 parse_ml_literal_string(location& loc)
 {
     const auto first = loc.iter();
@@ -659,7 +662,7 @@ parse_ml_literal_string(location& loc)
     }
 }
 
-inline result<std::pair<toml::string, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<toml::string, region>, std::string>
 parse_literal_string(location& loc)
 {
     const auto first = loc.iter();
@@ -714,7 +717,7 @@ parse_literal_string(location& loc)
     }
 }
 
-inline result<std::pair<toml::string, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<toml::string, region>, std::string>
 parse_string(location& loc)
 {
     if(loc.iter() != loc.end() && *(loc.iter()) == '"')
@@ -745,7 +748,7 @@ parse_string(location& loc)
                 {{source_location(loc), "the next token is not a string"}}));
 }
 
-inline result<std::pair<local_date, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<local_date, region>, std::string>
 parse_local_date(location& loc)
 {
     const auto first = loc.iter();
@@ -818,7 +821,7 @@ parse_local_date(location& loc)
     }
 }
 
-inline result<std::pair<local_time, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<local_time, region>, std::string>
 parse_local_time(location& loc)
 {
     const auto first = loc.iter();
@@ -918,7 +921,7 @@ parse_local_time(location& loc)
     }
 }
 
-inline result<std::pair<local_datetime, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<local_datetime, region>, std::string>
 parse_local_datetime(location& loc)
 {
     const auto first = loc.iter();
@@ -962,7 +965,7 @@ parse_local_datetime(location& loc)
     }
 }
 
-inline result<std::pair<offset_datetime, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<offset_datetime, region>, std::string>
 parse_offset_datetime(location& loc)
 {
     const auto first = loc.iter();
@@ -1021,7 +1024,7 @@ parse_offset_datetime(location& loc)
     }
 }
 
-inline result<std::pair<key, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<key, region>, std::string>
 parse_simple_key(location& loc)
 {
     if(const auto bstr = parse_basic_string(loc))
@@ -1042,7 +1045,7 @@ parse_simple_key(location& loc)
 }
 
 // dotted key become vector of keys
-inline result<std::pair<std::vector<key>, region>, std::string>
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<std::vector<key>, region>, std::string>
 parse_key(location& loc)
 {
     const auto first = loc.iter();
@@ -1103,6 +1106,325 @@ parse_key(location& loc)
                 "dotted keys: sequence of bare or quoted keys joined with a dot."
                 }));
 }
+
+TOML_INLINE_IF_HEADER_ONLY result<value_t, std::string> guess_number_type(const location& l)
+{
+    // This function tries to find some (common) mistakes by checking characters
+    // that follows the last character of a value. But it is often difficult
+    // because some non-newline characters can appear after a value. E.g.
+    // spaces, tabs, commas (in an array or inline table), closing brackets
+    // (of an array or inline table), comment-sign (#). Since this function
+    // does not parse further, those characters are always allowed to be there.
+    location loc = l;
+
+    if(lex_offset_date_time::invoke(loc)) {return ok(value_t::offset_datetime);}
+    loc.reset(l.iter());
+
+    if(lex_local_date_time::invoke(loc))
+    {
+        // bad offset may appear after this.
+        if(loc.iter() != loc.end() && (*loc.iter() == '+' || *loc.iter() == '-'
+                    || *loc.iter() == 'Z' || *loc.iter() == 'z'))
+        {
+            return err(format_underline("bad offset: should be [+-]HH:MM or Z",
+                        {{source_location(loc), "[+-]HH:MM or Z"}},
+                        {"pass: +09:00, -05:30", "fail: +9:00, -5:30"}));
+        }
+        return ok(value_t::local_datetime);
+    }
+    loc.reset(l.iter());
+
+    if(lex_local_date::invoke(loc))
+    {
+        // bad time may appear after this.
+        // A space is allowed as a delimiter between local time. But there are
+        // both cases in which a space becomes valid or invalid.
+        // - invalid: 2019-06-16 7:00:00
+        // - valid  : 2019-06-16 07:00:00
+        if(loc.iter() != loc.end())
+        {
+            const auto c = *loc.iter();
+            if(c == 'T' || c == 't')
+            {
+                return err(format_underline("bad time: should be HH:MM:SS.subsec",
+                        {{source_location(loc), "HH:MM:SS.subsec"}},
+                        {"pass: 1979-05-27T07:32:00, 1979-05-27 07:32:00.999999",
+                         "fail: 1979-05-27T7:32:00, 1979-05-27 17:32"}));
+            }
+            if('0' <= c && c <= '9')
+            {
+                return err(format_underline("bad time: missing T",
+                        {{source_location(loc), "T or space required here"}},
+                        {"pass: 1979-05-27T07:32:00, 1979-05-27 07:32:00.999999",
+                         "fail: 1979-05-27T7:32:00, 1979-05-27 7:32"}));
+            }
+            if(c == ' ' && std::next(loc.iter()) != loc.end() &&
+                ('0' <= *std::next(loc.iter()) && *std::next(loc.iter())<= '9'))
+            {
+                loc.advance();
+                return err(format_underline("bad time: should be HH:MM:SS.subsec",
+                        {{source_location(loc), "HH:MM:SS.subsec"}},
+                        {"pass: 1979-05-27T07:32:00, 1979-05-27 07:32:00.999999",
+                         "fail: 1979-05-27T7:32:00, 1979-05-27 7:32"}));
+            }
+        }
+        return ok(value_t::local_date);
+    }
+    loc.reset(l.iter());
+
+    if(lex_local_time::invoke(loc)) {return ok(value_t::local_time);}
+    loc.reset(l.iter());
+
+    if(lex_float::invoke(loc))
+    {
+        if(loc.iter() != loc.end() && *loc.iter() == '_')
+        {
+            return err(format_underline("bad float: `_` should be surrounded by digits",
+                        {{source_location(loc), "here"}},
+                        {"pass: +1.0, -2e-2, 3.141_592_653_589, inf, nan",
+                         "fail: .0, 1., _1.0, 1.0_, 1_.0, 1.0__0"}));
+        }
+        return ok(value_t::floating);
+    }
+    loc.reset(l.iter());
+
+    if(lex_integer::invoke(loc))
+    {
+        if(loc.iter() != loc.end())
+        {
+            const auto c = *loc.iter();
+            if(c == '_')
+            {
+                return err(format_underline("bad integer: `_` should be surrounded by digits",
+                            {{source_location(loc), "here"}},
+                            {"pass: -42, 1_000, 1_2_3_4_5, 0xC0FFEE, 0b0010, 0o755",
+                             "fail: 1__000, 0123"}));
+            }
+            if('0' <= c && c <= '9')
+            {
+                // leading zero. point '0'
+                loc.retrace();
+                return err(format_underline("bad integer: leading zero",
+                            {{source_location(loc), "here"}},
+                            {"pass: -42, 1_000, 1_2_3_4_5, 0xC0FFEE, 0b0010, 0o755",
+                             "fail: 1__000, 0123"}));
+            }
+            if(c == ':' || c == '-')
+            {
+                return err(format_underline("bad datetime: invalid format",
+                            {{source_location(loc), "here"}},
+                            {"pass: 1979-05-27T07:32:00-07:00, 1979-05-27 07:32:00.999999Z",
+                             "fail: 1979-05-27T7:32:00-7:00, 1979-05-27 7:32-00:30"}));
+            }
+            if(c == '.' || c == 'e' || c == 'E')
+            {
+                return err(format_underline("bad float: invalid format",
+                            {{source_location(loc), "here"}},
+                            {"pass: +1.0, -2e-2, 3.141_592_653_589, inf, nan",
+                             "fail: .0, 1., _1.0, 1.0_, 1_.0, 1.0__0"}));
+            }
+        }
+        return ok(value_t::integer);
+    }
+    if(loc.iter() != loc.end() && *loc.iter() == '.')
+    {
+        return err(format_underline("bad float: invalid format",
+                {{source_location(loc), "integer part required before this"}},
+                {"pass: +1.0, -2e-2, 3.141_592_653_589, inf, nan",
+                 "fail: .0, 1., _1.0, 1.0_, 1_.0, 1.0__0"}));
+    }
+    if(loc.iter() != loc.end() && *loc.iter() == '_')
+    {
+        return err(format_underline("bad number: `_` should be surrounded by digits",
+                {{source_location(loc), "`_` is not surrounded by digits"}},
+                {"pass: -42, 1_000, 1_2_3_4_5, 0xC0FFEE, 0b0010, 0o755",
+                 "fail: 1__000, 0123"}));
+    }
+    return err(format_underline("bad format: unknown value appeared",
+                {{source_location(loc), "here"}}));
+}
+
+TOML_INLINE_IF_HEADER_ONLY result<value_t, std::string> guess_value_type(const location& loc)
+{
+    switch(*loc.iter())
+    {
+        case '"' : {return ok(value_t::string);  }
+        case '\'': {return ok(value_t::string);  }
+        case 't' : {return ok(value_t::boolean); }
+        case 'f' : {return ok(value_t::boolean); }
+        case '[' : {return ok(value_t::array);   }
+        case '{' : {return ok(value_t::table);   }
+        case 'i' : {return ok(value_t::floating);} // inf.
+        case 'n' : {return ok(value_t::floating);} // nan.
+        default  : {return guess_number_type(loc);}
+    }
+}
+
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<std::vector<key>, region>, std::string>
+parse_table_key(location& loc)
+{
+    if(auto token = lex_std_table::invoke(loc))
+    {
+        location inner_loc(loc.name(), token.unwrap().str());
+
+        const auto open = lex_std_table_open::invoke(inner_loc);
+        if(!open || inner_loc.iter() == inner_loc.end())
+        {
+            throw internal_error(format_underline(
+                "toml::parse_table_key: no `[`",
+                {{source_location(inner_loc), "should be `[`"}}),
+                source_location(inner_loc));
+        }
+        // to skip [ a . b . c ]
+        //          ^----------- this whitespace
+        lex_ws::invoke(inner_loc);
+        const auto keys = parse_key(inner_loc);
+        if(!keys)
+        {
+            throw internal_error(format_underline(
+                "toml::parse_table_key: invalid key",
+                {{source_location(inner_loc), "not key"}}),
+                source_location(inner_loc));
+        }
+        // to skip [ a . b . c ]
+        //                    ^-- this whitespace
+        lex_ws::invoke(inner_loc);
+        const auto close = lex_std_table_close::invoke(inner_loc);
+        if(!close)
+        {
+            throw internal_error(format_underline(
+                "toml::parse_table_key: no `]`",
+                {{source_location(inner_loc), "should be `]`"}}),
+                source_location(inner_loc));
+        }
+
+        // after [table.key], newline or EOF(empty table) required.
+        if(loc.iter() != loc.end())
+        {
+            using lex_newline_after_table_key =
+                sequence<maybe<lex_ws>, maybe<lex_comment>, lex_newline>;
+            const auto nl = lex_newline_after_table_key::invoke(loc);
+            if(!nl)
+            {
+                throw syntax_error(format_underline(
+                    "toml::parse_table_key: newline required after [table.key]",
+                    {{source_location(loc), "expected newline"}}),
+                    source_location(loc));
+            }
+        }
+        return ok(std::make_pair(keys.unwrap().first, token.unwrap()));
+    }
+    else
+    {
+        return err(format_underline("toml::parse_table_key: "
+            "not a valid table key", {{source_location(loc), "here"}}));
+    }
+}
+
+TOML_INLINE_IF_HEADER_ONLY result<std::pair<std::vector<key>, region>, std::string>
+parse_array_table_key(location& loc)
+{
+    if(auto token = lex_array_table::invoke(loc))
+    {
+        location inner_loc(loc.name(), token.unwrap().str());
+
+        const auto open = lex_array_table_open::invoke(inner_loc);
+        if(!open || inner_loc.iter() == inner_loc.end())
+        {
+            throw internal_error(format_underline(
+                "toml::parse_array_table_key: no `[[`",
+                {{source_location(inner_loc), "should be `[[`"}}),
+                source_location(inner_loc));
+        }
+        lex_ws::invoke(inner_loc);
+        const auto keys = parse_key(inner_loc);
+        if(!keys)
+        {
+            throw internal_error(format_underline(
+                "toml::parse_array_table_key: invalid key",
+                {{source_location(inner_loc), "not a key"}}),
+                source_location(inner_loc));
+        }
+        lex_ws::invoke(inner_loc);
+        const auto close = lex_array_table_close::invoke(inner_loc);
+        if(!close)
+        {
+            throw internal_error(format_underline(
+                "toml::parse_array_table_key: no `]]`",
+                {{source_location(inner_loc), "should be `]]`"}}),
+                source_location(inner_loc));
+        }
+
+        // after [[table.key]], newline or EOF(empty table) required.
+        if(loc.iter() != loc.end())
+        {
+            using lex_newline_after_table_key =
+                sequence<maybe<lex_ws>, maybe<lex_comment>, lex_newline>;
+            const auto nl = lex_newline_after_table_key::invoke(loc);
+            if(!nl)
+            {
+                throw syntax_error(format_underline("toml::"
+                    "parse_array_table_key: newline required after [[table.key]]",
+                    {{source_location(loc), "expected newline"}}),
+                    source_location(loc));
+            }
+        }
+        return ok(std::make_pair(keys.unwrap().first, token.unwrap()));
+    }
+    else
+    {
+        return err(format_underline("toml::parse_array_table_key: "
+            "not a valid table key", {{source_location(loc), "here"}}));
+    }
+}
+
+#endif // TOML_FOR_MODERN_CPP_WITH_IMPLEMENTATION
+
+#ifdef TOML_FOR_MODERN_CPP_FORWARDS
+extern result<std::pair<boolean, region>, std::string>
+parse_boolean(location& loc);
+extern result<std::pair<integer, region>, std::string>
+parse_binary_integer(location& loc);
+extern result<std::pair<integer, region>, std::string>
+parse_octal_integer(location& loc);
+extern result<std::pair<integer, region>, std::string>
+parse_hexadecimal_integer(location& loc);
+extern result<std::pair<integer, region>, std::string>
+parse_integer(location& loc);
+extern result<std::pair<floating, region>, std::string>
+parse_floating(location& loc);
+extern std::string read_utf8_codepoint(const region& reg, const location& loc);
+extern result<std::string, std::string> parse_escape_sequence(location& loc);
+extern std::ptrdiff_t check_utf8_validity(const std::string& reg);
+extern result<std::pair<toml::string, region>, std::string>
+parse_ml_basic_string(location& loc);
+extern result<std::pair<toml::string, region>, std::string>
+parse_basic_string(location& loc);
+extern result<std::pair<toml::string, region>, std::string>
+parse_ml_literal_string(location& loc);
+extern result<std::pair<toml::string, region>, std::string>
+parse_literal_string(location& loc);
+extern result<std::pair<toml::string, region>, std::string>
+parse_string(location& loc);
+extern result<std::pair<local_date, region>, std::string>
+parse_local_date(location& loc);
+extern result<std::pair<local_time, region>, std::string>
+parse_local_time(location& loc);
+extern result<std::pair<local_datetime, region>, std::string>
+parse_local_datetime(location& loc);
+extern result<std::pair<offset_datetime, region>, std::string>
+parse_offset_datetime(location& loc);
+extern result<std::pair<key, region>, std::string>
+parse_simple_key(location& loc);
+extern result<std::pair<std::vector<key>, region>, std::string>
+parse_key(location& loc);
+extern result<value_t, std::string> guess_number_type(const location& l);
+extern result<value_t, std::string> guess_value_type(const location& loc);
+extern result<std::pair<std::vector<key>, region>, std::string>
+parse_table_key(location& loc);
+extern result<std::pair<std::vector<key>, region>, std::string>
+parse_array_table_key(location& loc);
+#endif // TOML_FOR_MODERN_CPP_FORWARDS
 
 // forward-decl to implement parse_array and parse_table
 template<typename Value>
@@ -1861,159 +2183,6 @@ parse_inline_table(location& loc)
             source_location(loc));
 }
 
-inline result<value_t, std::string> guess_number_type(const location& l)
-{
-    // This function tries to find some (common) mistakes by checking characters
-    // that follows the last character of a value. But it is often difficult
-    // because some non-newline characters can appear after a value. E.g.
-    // spaces, tabs, commas (in an array or inline table), closing brackets
-    // (of an array or inline table), comment-sign (#). Since this function
-    // does not parse further, those characters are always allowed to be there.
-    location loc = l;
-
-    if(lex_offset_date_time::invoke(loc)) {return ok(value_t::offset_datetime);}
-    loc.reset(l.iter());
-
-    if(lex_local_date_time::invoke(loc))
-    {
-        // bad offset may appear after this.
-        if(loc.iter() != loc.end() && (*loc.iter() == '+' || *loc.iter() == '-'
-                    || *loc.iter() == 'Z' || *loc.iter() == 'z'))
-        {
-            return err(format_underline("bad offset: should be [+-]HH:MM or Z",
-                        {{source_location(loc), "[+-]HH:MM or Z"}},
-                        {"pass: +09:00, -05:30", "fail: +9:00, -5:30"}));
-        }
-        return ok(value_t::local_datetime);
-    }
-    loc.reset(l.iter());
-
-    if(lex_local_date::invoke(loc))
-    {
-        // bad time may appear after this.
-        // A space is allowed as a delimiter between local time. But there are
-        // both cases in which a space becomes valid or invalid.
-        // - invalid: 2019-06-16 7:00:00
-        // - valid  : 2019-06-16 07:00:00
-        if(loc.iter() != loc.end())
-        {
-            const auto c = *loc.iter();
-            if(c == 'T' || c == 't')
-            {
-                return err(format_underline("bad time: should be HH:MM:SS.subsec",
-                        {{source_location(loc), "HH:MM:SS.subsec"}},
-                        {"pass: 1979-05-27T07:32:00, 1979-05-27 07:32:00.999999",
-                         "fail: 1979-05-27T7:32:00, 1979-05-27 17:32"}));
-            }
-            if('0' <= c && c <= '9')
-            {
-                return err(format_underline("bad time: missing T",
-                        {{source_location(loc), "T or space required here"}},
-                        {"pass: 1979-05-27T07:32:00, 1979-05-27 07:32:00.999999",
-                         "fail: 1979-05-27T7:32:00, 1979-05-27 7:32"}));
-            }
-            if(c == ' ' && std::next(loc.iter()) != loc.end() &&
-                ('0' <= *std::next(loc.iter()) && *std::next(loc.iter())<= '9'))
-            {
-                loc.advance();
-                return err(format_underline("bad time: should be HH:MM:SS.subsec",
-                        {{source_location(loc), "HH:MM:SS.subsec"}},
-                        {"pass: 1979-05-27T07:32:00, 1979-05-27 07:32:00.999999",
-                         "fail: 1979-05-27T7:32:00, 1979-05-27 7:32"}));
-            }
-        }
-        return ok(value_t::local_date);
-    }
-    loc.reset(l.iter());
-
-    if(lex_local_time::invoke(loc)) {return ok(value_t::local_time);}
-    loc.reset(l.iter());
-
-    if(lex_float::invoke(loc))
-    {
-        if(loc.iter() != loc.end() && *loc.iter() == '_')
-        {
-            return err(format_underline("bad float: `_` should be surrounded by digits",
-                        {{source_location(loc), "here"}},
-                        {"pass: +1.0, -2e-2, 3.141_592_653_589, inf, nan",
-                         "fail: .0, 1., _1.0, 1.0_, 1_.0, 1.0__0"}));
-        }
-        return ok(value_t::floating);
-    }
-    loc.reset(l.iter());
-
-    if(lex_integer::invoke(loc))
-    {
-        if(loc.iter() != loc.end())
-        {
-            const auto c = *loc.iter();
-            if(c == '_')
-            {
-                return err(format_underline("bad integer: `_` should be surrounded by digits",
-                            {{source_location(loc), "here"}},
-                            {"pass: -42, 1_000, 1_2_3_4_5, 0xC0FFEE, 0b0010, 0o755",
-                             "fail: 1__000, 0123"}));
-            }
-            if('0' <= c && c <= '9')
-            {
-                // leading zero. point '0'
-                loc.retrace();
-                return err(format_underline("bad integer: leading zero",
-                            {{source_location(loc), "here"}},
-                            {"pass: -42, 1_000, 1_2_3_4_5, 0xC0FFEE, 0b0010, 0o755",
-                             "fail: 1__000, 0123"}));
-            }
-            if(c == ':' || c == '-')
-            {
-                return err(format_underline("bad datetime: invalid format",
-                            {{source_location(loc), "here"}},
-                            {"pass: 1979-05-27T07:32:00-07:00, 1979-05-27 07:32:00.999999Z",
-                             "fail: 1979-05-27T7:32:00-7:00, 1979-05-27 7:32-00:30"}));
-            }
-            if(c == '.' || c == 'e' || c == 'E')
-            {
-                return err(format_underline("bad float: invalid format",
-                            {{source_location(loc), "here"}},
-                            {"pass: +1.0, -2e-2, 3.141_592_653_589, inf, nan",
-                             "fail: .0, 1., _1.0, 1.0_, 1_.0, 1.0__0"}));
-            }
-        }
-        return ok(value_t::integer);
-    }
-    if(loc.iter() != loc.end() && *loc.iter() == '.')
-    {
-        return err(format_underline("bad float: invalid format",
-                {{source_location(loc), "integer part required before this"}},
-                {"pass: +1.0, -2e-2, 3.141_592_653_589, inf, nan",
-                 "fail: .0, 1., _1.0, 1.0_, 1_.0, 1.0__0"}));
-    }
-    if(loc.iter() != loc.end() && *loc.iter() == '_')
-    {
-        return err(format_underline("bad number: `_` should be surrounded by digits",
-                {{source_location(loc), "`_` is not surrounded by digits"}},
-                {"pass: -42, 1_000, 1_2_3_4_5, 0xC0FFEE, 0b0010, 0o755",
-                 "fail: 1__000, 0123"}));
-    }
-    return err(format_underline("bad format: unknown value appeared",
-                {{source_location(loc), "here"}}));
-}
-
-inline result<value_t, std::string> guess_value_type(const location& loc)
-{
-    switch(*loc.iter())
-    {
-        case '"' : {return ok(value_t::string);  }
-        case '\'': {return ok(value_t::string);  }
-        case 't' : {return ok(value_t::boolean); }
-        case 'f' : {return ok(value_t::boolean); }
-        case '[' : {return ok(value_t::array);   }
-        case '{' : {return ok(value_t::table);   }
-        case 'i' : {return ok(value_t::floating);} // inf.
-        case 'n' : {return ok(value_t::floating);} // nan.
-        default  : {return guess_number_type(loc);}
-    }
-}
-
 template<typename Value, typename T>
 result<Value, std::string>
 parse_value_helper(result<std::pair<T, region>, std::string> rslt)
@@ -2064,124 +2233,6 @@ result<Value, std::string> parse_value(location& loc)
             loc.reset(first);
             return err(msg);
         }
-    }
-}
-
-inline result<std::pair<std::vector<key>, region>, std::string>
-parse_table_key(location& loc)
-{
-    if(auto token = lex_std_table::invoke(loc))
-    {
-        location inner_loc(loc.name(), token.unwrap().str());
-
-        const auto open = lex_std_table_open::invoke(inner_loc);
-        if(!open || inner_loc.iter() == inner_loc.end())
-        {
-            throw internal_error(format_underline(
-                "toml::parse_table_key: no `[`",
-                {{source_location(inner_loc), "should be `[`"}}),
-                source_location(inner_loc));
-        }
-        // to skip [ a . b . c ]
-        //          ^----------- this whitespace
-        lex_ws::invoke(inner_loc);
-        const auto keys = parse_key(inner_loc);
-        if(!keys)
-        {
-            throw internal_error(format_underline(
-                "toml::parse_table_key: invalid key",
-                {{source_location(inner_loc), "not key"}}),
-                source_location(inner_loc));
-        }
-        // to skip [ a . b . c ]
-        //                    ^-- this whitespace
-        lex_ws::invoke(inner_loc);
-        const auto close = lex_std_table_close::invoke(inner_loc);
-        if(!close)
-        {
-            throw internal_error(format_underline(
-                "toml::parse_table_key: no `]`",
-                {{source_location(inner_loc), "should be `]`"}}),
-                source_location(inner_loc));
-        }
-
-        // after [table.key], newline or EOF(empty table) required.
-        if(loc.iter() != loc.end())
-        {
-            using lex_newline_after_table_key =
-                sequence<maybe<lex_ws>, maybe<lex_comment>, lex_newline>;
-            const auto nl = lex_newline_after_table_key::invoke(loc);
-            if(!nl)
-            {
-                throw syntax_error(format_underline(
-                    "toml::parse_table_key: newline required after [table.key]",
-                    {{source_location(loc), "expected newline"}}),
-                    source_location(loc));
-            }
-        }
-        return ok(std::make_pair(keys.unwrap().first, token.unwrap()));
-    }
-    else
-    {
-        return err(format_underline("toml::parse_table_key: "
-            "not a valid table key", {{source_location(loc), "here"}}));
-    }
-}
-
-inline result<std::pair<std::vector<key>, region>, std::string>
-parse_array_table_key(location& loc)
-{
-    if(auto token = lex_array_table::invoke(loc))
-    {
-        location inner_loc(loc.name(), token.unwrap().str());
-
-        const auto open = lex_array_table_open::invoke(inner_loc);
-        if(!open || inner_loc.iter() == inner_loc.end())
-        {
-            throw internal_error(format_underline(
-                "toml::parse_array_table_key: no `[[`",
-                {{source_location(inner_loc), "should be `[[`"}}),
-                source_location(inner_loc));
-        }
-        lex_ws::invoke(inner_loc);
-        const auto keys = parse_key(inner_loc);
-        if(!keys)
-        {
-            throw internal_error(format_underline(
-                "toml::parse_array_table_key: invalid key",
-                {{source_location(inner_loc), "not a key"}}),
-                source_location(inner_loc));
-        }
-        lex_ws::invoke(inner_loc);
-        const auto close = lex_array_table_close::invoke(inner_loc);
-        if(!close)
-        {
-            throw internal_error(format_underline(
-                "toml::parse_array_table_key: no `]]`",
-                {{source_location(inner_loc), "should be `]]`"}}),
-                source_location(inner_loc));
-        }
-
-        // after [[table.key]], newline or EOF(empty table) required.
-        if(loc.iter() != loc.end())
-        {
-            using lex_newline_after_table_key =
-                sequence<maybe<lex_ws>, maybe<lex_comment>, lex_newline>;
-            const auto nl = lex_newline_after_table_key::invoke(loc);
-            if(!nl)
-            {
-                throw syntax_error(format_underline("toml::"
-                    "parse_array_table_key: newline required after [[table.key]]",
-                    {{source_location(loc), "expected newline"}}),
-                    source_location(loc));
-            }
-        }
-        return ok(std::make_pair(keys.unwrap().first, token.unwrap()));
-    }
-    else
-    {
-        return err(format_underline("toml::parse_array_table_key: "
-            "not a valid table key", {{source_location(loc), "here"}}));
     }
 }
 
