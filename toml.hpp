@@ -29,6 +29,21 @@
 #define TOML11_VERSION_MINOR 7
 #define TOML11_VERSION_PATCH 1
 
+// Forwards vs. implementation
+#if defined(TOML_FOR_MODERN_CPP_FORWARDS) && defined(TOML_FOR_MODERN_CPP_IMPLEMENTATION)
+// Sanity check
+#error "Please define only one of TOML_FOR_MODERN_CPP_FORWARDS and TOML_FOR_MODERN_CPP_IMPLEMENTATION"
+#elif (!defined(TOML_FOR_MODERN_CPP_FORWARDS)) && (!defined(TOML_FOR_MODERN_CPP_IMPLEMENTATION))
+// By default, the full implementation
+#define TOML_FOR_MODERN_CPP_IMPLEMENTATION
+#endif
+
+#ifdef TOML_FOR_MODERN_CPP_IMPLEMENTATION
+#define TOML_MODCPP_API
+#else
+#define TOML_MODCPP_API extern
+#endif
+
 #include "toml/parser.hpp"
 #include "toml/literal.hpp"
 #include "toml/serializer.hpp"
