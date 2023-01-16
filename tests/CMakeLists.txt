@@ -289,3 +289,9 @@ if(WIN32)
     target_link_libraries(test_windows toml11::toml11)
 endif()
 
+# Test split interface/implementation compilation
+add_executable(test_split_impl
+               test_split_impl_toml.cpp
+               test_split_impl_main.cpp)
+target_link_libraries(test_split_impl toml11::toml11)
+
