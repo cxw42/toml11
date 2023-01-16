@@ -33,15 +33,18 @@
 #if defined(TOML_FOR_MODERN_CPP_FORWARDS) && defined(TOML_FOR_MODERN_CPP_IMPLEMENTATION)
 // Sanity check
 #error "Please define only one of TOML_FOR_MODERN_CPP_FORWARDS and TOML_FOR_MODERN_CPP_IMPLEMENTATION"
-#elif (!defined(TOML_FOR_MODERN_CPP_FORWARDS)) && (!defined(TOML_FOR_MODERN_CPP_IMPLEMENTATION))
-// By default, the full implementation
-#define TOML_FOR_MODERN_CPP_IMPLEMENTATION
 #endif
 
-#ifdef TOML_FOR_MODERN_CPP_IMPLEMENTATION
-#define TOML_MODCPP_API
-#else
-#define TOML_MODCPP_API extern
+#if (!defined(TOML_FOR_MODERN_CPP_FORWARDS)) && (!defined(TOML_FOR_MODERN_CPP_IMPLEMENTATION))
+// By default, the full implementation as a header-only library
+#define TOML_FOR_MODERN_CPP_WITH_IMPLEMENTATION
+#define TOML_INLINE_IF_HEADER_ONLY inline
+
+#elif defined(TOML_FOR_MODERN_CPP_IMPLEMENTATION)
+// Implementation file: don't inline the implementation functions
+#define TOML_FOR_MODERN_CPP_WITH_IMPLEMENTATION
+#define TOML_INLINE_IF_HEADER_ONLY
+
 #endif
 
 #include "toml/parser.hpp"
