@@ -8,8 +8,8 @@
 
 #ifdef TOML_FOR_MODERN_CPP_WITH_IMPLEMENTATION
 #include "combinator.hpp"
-#include "lexer.hpp"
 #endif // TOML_FOR_MODERN_CPP_WITH_IMPLEMENTATION
+#include "lexer.hpp"
 #include "region.hpp"
 #include "result.hpp"
 #include "types.hpp"
