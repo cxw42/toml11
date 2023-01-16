@@ -1,8 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
-#include <toml/region.hpp>
-#include <toml/result.hpp>
+#include "toml.hpp"
 
 #define TOML11_TEST_LEX_ACCEPT(lxr, tkn, expct)                                \
 do {                                                                           \

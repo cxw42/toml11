@@ -1,5 +1,4 @@
-#include <toml/get.hpp>
-#include <toml/parser.hpp>
+#include "toml.hpp"
 
 #include "unit_test.hpp"
 #include "test_parse_aux.hpp"
